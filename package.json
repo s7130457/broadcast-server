@@ -1,0 +1,31 @@
+{
+  "name": "broadcast-server",
+  "version": "1.0.0",
+  "description": "透過瀏覽器收聲音，並且送到後端，再由後端廣播出去",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jeni",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "socket.io": "^3.0.5",
+    "ws": "^7.3.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s7130457/broadcast-server.git"
+  },
+  "keywords": [
+    "broadcast",
+    "recorderjs"
+  ],
+  "bugs": {
+    "url": "https://github.com/s7130457/broadcast-server/issues"
+  },
+  "homepage": "https://github.com/s7130457/broadcast-server#readme"
+}
