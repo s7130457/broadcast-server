@@ -4,15 +4,18 @@
   "description": "透過瀏覽器收聲音，並且送到後端，再由後端廣播出去",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "html": "browserify ./public/*.js -o ./dist/dist.js"
   },
   "author": "jeni",
   "license": "ISC",
   "dependencies": {
+    "browserify": "^17.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "socket.io": "^3.0.5",
+    "socket.io-client": "^3.0.5",
     "ws": "^7.3.1"
   },
   "devDependencies": {},
