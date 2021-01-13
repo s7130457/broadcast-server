@@ -2,17 +2,17 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+// app.options('*', cors())
+app.use(cors({
+  origin: '*',
+  optionsSuccessStatus: 200
+}))
 
 const BroadcastService = require('./broadcast')
 
-const server = require('http').Server(app)
-const ws = require('socket.io')(server, {
-  transports: ['websocket', 'polling'],
-  pingInterval: 40000,
-  pingTimeout: 25000
-})
+const server = require('http').createServer(app)
+const ws = require('socket.io')(server)
 
-app.use(cors())
 app.use(express.static('public'))
 
 let recorder = null

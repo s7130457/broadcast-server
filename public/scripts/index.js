@@ -22,16 +22,16 @@
 
 
 
-// define(function(require, exports, module) {
-//   var io = require('socket.io-client'),
-//       b = require('./works/recorder');
-//   const socket = io('http://127.0.0.1:3000')
-//   console.log(socket);
+define(function(require, exports, module) {
+  var io = require('socket.io-client'),
+      b = require('./works/recorder');
+  const socket = io('http://127.0.0.1:3000')
+  console.log(socket);
    
-//   //Return the module value
-//   return function () {};
-// }
-// );
+  //Return the module value
+  return function () {};
+}
+);
 
 
 // $(document).ready(function () {
@@ -40,6 +40,8 @@
 
 // })
 
+/**
+ * 
  // const Recorder = require('./recorder').Recorder
  console.log('init index.js');
  const io = require('socket.io-client')
@@ -53,3 +55,4 @@
  //   console.log('connect')
  //   // socket.emit('broadcast',  {msg: '我是從前端ws來的哦'} )
  // })
+ */

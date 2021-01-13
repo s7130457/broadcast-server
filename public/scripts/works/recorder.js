@@ -1,3 +1,4 @@
+// import InlineWorker from 'inline-worker';
 const InlineWorker = require('inline-worker')
 
 export class Recorder {
