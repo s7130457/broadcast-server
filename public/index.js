@@ -1,1 +1,1 @@
-module.exports = require('./recorder').Recorder
+const Recorder = require('./recorder').Recorder
