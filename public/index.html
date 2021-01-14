@@ -2,7 +2,6 @@
 
 <body>
   <!-- <script src="https://requirejs.org/docs/release/2.3.6/comments/require.js" data-main="scripts/index"></script> -->
-
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
     crossorigin="anonymous"></script> -->
@@ -18,11 +17,27 @@
 </html>
 
 <script>
-  // $(document).ready(function () {
-  //   // const socket = io();
-  //   console.log('印個東西吧，讓我知道你在動');
+  let recorder
+  window.onload = function init() {
+    try {
+      // webkit shim
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+      window.URL = window.URL || window.webkitURL;
+      
+      audio_context = new AudioContext;
+      htmlLog('Audio context set up.');
+      htmlLog('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+    } catch (e) {
+      alert('No web audio support in this browser!');
+    }
+    
+    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+      htmlLog('No live audio input: ' + e);
+    });
+  };
 
-  // })
+
   function htmlLog(e, data) {
     log.innerHTML += "\n" + e + " " + (data || '');
   }
@@ -33,7 +48,7 @@
     if (res.status === 200) {
       console.log(`好耶，開始廣播吧～`);
       htmlLog(`好耶，開始廣播吧～`)
-
+      // recorder && recorder.record()
     } else {
       htmlLog(`！！！！！\n居然被搶先了，只好再等等了...ＱＱ`)
       console.log(`！！！！！\n居然被搶先了，只好再等等了...ＱＱ`);
@@ -45,6 +60,21 @@
     fetch(`http://127.0.0.1:3000/api/broadcast/stop`)
       .then(res => console.log(res.body))
     htmlLog(`廣播結束`)
+    // recorder && recorder.stop();
+
+  }
+
+  function startUserMedia(stream) {
+    const input = audio_context.createMediaStreamSource(stream)
+    htmlLog(`Media stream created.`)
+
+    htmlLog(`打開會有回音的感覺`)
+    input.connect(audio_context.destination)
+
+    // recorder = new Recorder(input);
+    // console.log(recorder);
+    
+
 
   }
 

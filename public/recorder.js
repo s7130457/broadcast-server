@@ -1,4 +1,4 @@
-const InlineWorker = require('inline-worker')
+import InlineWorker from 'inline-worker'
 
 export class Recorder {
 	config = {

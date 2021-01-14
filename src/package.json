@@ -1,0 +1,18 @@
+{
+  "name": "broadcast-server",
+  "version": "1.0.0",
+  "description": "透過瀏覽器收聲音，並且送到後端，再由後端廣播出去",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/app.js"
+  },
+  "author": "jeni",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "ws": "^7.4.2"
+  },
+  "devDependencies": {
+  }
+}

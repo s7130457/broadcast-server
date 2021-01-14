@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "html": "browserify ./public/index.js -o ./dist/dist.js",
+    "build:lib": "babel public/ -d lib/",
+    "html": "browserify lib/index.js -t babelify --outfile dist/recorder.js -s Recorder",
     "prestart": "npm run html",
     "start": "node ./src/app.js"
   },
@@ -15,13 +16,13 @@
     "browserify": "^17.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "inline-worker": "^1.1.0",
     "node-fetch": "^2.6.1",
-    "requirejs": "^2.3.6",
-    "socket.io": "^3.0.5",
-    "socket.io-client": "^3.0.5",
     "ws": "^7.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babelify": "^10.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/s7130457/broadcast-server.git"
@@ -33,5 +34,11 @@
   "bugs": {
     "url": "https://github.com/s7130457/broadcast-server/issues"
   },
-  "homepage": "https://github.com/s7130457/broadcast-server#readme"
+  "homepage": "https://github.com/s7130457/broadcast-server#readme",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
+  }
 }
