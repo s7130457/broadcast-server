@@ -3,6 +3,9 @@ const app = express()
 const WebSocket = require('ws')
 const ws = new WebSocket.Server({ port: 5000 })
 const cors = require('cors')
+const AudioBuffer = require('audiobuffer')
+const fs = require('fs')
+const toWav = require('audiobuffer-to-wav')
 
 const BroadcastService = require('./broadcast')
 
@@ -13,6 +16,8 @@ app.use(express.static('public'))
 
 let recorder = null
 let connectClient = ''
+let audioBuffer = null
+let chunks = []
 
 server.listen(3000, () => {
   console.log(`listen 3000`);
@@ -44,11 +49,23 @@ function initWS (ws) {
   ws.on('connection', socket => {
     console.log(`client connect`)
     // socket.send('something');
-    socket.on('message', stream => {
-      console.log(`從ws收到資料`);
-      console.log(JSON.stringify(stream));
-      // 在停止時，要把它存成音樂檔哦
-      // => 所以這邊收到的stream要用個chunk存起來
+    socket.on('message', data => {
+      if (data === '打招呼') {
+        chunks = []
+        console.log(`ws寄中斷點過來囉～`);
+        
+      } else {
+        console.log(`從ws收到資料`);
+        console.log(data);
+        
+        // let wav = toWav(data)
+        let chunk = new Uint8Array(data)
+        // audioBuffer = new AudioBuffer(4096, 48000, 2)
+        console.log(chunk);
+        fs.appendFileSync('test.wav', Buffer.from(chunk))
+        // 在停止時，要把它存成音樂檔哦
+        // => 所以這邊收到的stream要用個chunk存起來
+      }
       
     })
   })

@@ -1,6 +1,8 @@
 var WORKER_PATH = './recorderWorker.js';
 
 var Recorder = function(source, cfg){
+  let soundSource
+
   var config = cfg || {};
   var bufferLen = config.bufferLen || 4096;
   this.context = source.context;
@@ -22,17 +24,14 @@ var Recorder = function(source, cfg){
   var recording = false,
     currCallback;
 
+  
   this.node.onaudioprocess = function(e){
     if (!recording) return;
-    console.log(e);
+    // mediaRecorder
+    socket.send(e.inputBuffer.getChannelData(1))
+    console.log(e.inputBuffer);
     
-    socket.send({
-      // command: 'record',
-      buffer: [
-        e.inputBuffer.getChannelData(0),
-        e.inputBuffer.getChannelData(1)
-      ]
-    })
+
     worker.postMessage({
       command: 'record',
       buffer: [
@@ -90,5 +89,7 @@ Recorder.forceDownload = function(blob, filename){
   click.initEvent("click", true, true);
   link.dispatchEvent(click);
 }
+
+  
 
 module.exports = Recorder;

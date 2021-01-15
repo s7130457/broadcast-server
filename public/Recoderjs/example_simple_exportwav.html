@@ -32,18 +32,25 @@
 
   var audio_context;
   var recorder;
+  let mediaRecorder
+  let chunks = []
+  
+
 
   function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
     __log('Media stream created.');
-    console.log('stream');
-    console.log(stream);
+
+    // 我要在這邊把聲音的buffer收集起來
+    mediaRecorder = new MediaRecorder(stream)
+    console.log(mediaRecorder);
     
     // input.connect(audio_context.destination);
     // __log('Input connected to audio context destination.');
 
     recorder = new Recorder(input);
     __log('Recorder initialised.');
+
   }
 
   function startRecording(button) {
@@ -51,6 +58,11 @@
     button.disabled = true;
     button.nextElementSibling.disabled = false;
     __log('Recording...');
+
+    // 開始收聲音串流了～～
+    mediaRecorder.start()
+    console.log('mediaRecorder');
+    console.log(mediaRecorder);
     
   }
 
@@ -59,10 +71,15 @@
     button.disabled = true;
     button.previousElementSibling.disabled = false;
     __log('Stopped recording.');
+    socket.send('打招呼')
+
+
+    // 停止收聲音串流了～～
+    mediaRecorder.stop();
 
     // create WAV download link using audio data blob
     createDownloadLink();
-
+    
     recorder.clear();
   }
 
@@ -93,13 +110,21 @@
       audio_context = new AudioContext;
       __log('Audio context set up.');
       __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+   
     } catch (e) {
       alert('No web audio support in this browser!');
     }
 
-    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+    // navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+    //   __log('No live audio input: ' + e);
+    // });
+  let onError = function(err) {
       __log('No live audio input: ' + e);
-    });
+
+    console.log('The following error occured: ' + err);
+  }
+  navigator.mediaDevices.getUserMedia({audio: true}).then(startUserMedia, onError);
+    
   };
   </script>
 
