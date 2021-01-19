@@ -25,7 +25,7 @@
   <pre id="log"></pre>
 
   <script>
-  function __log(e, data) {
+  function htmlLog(e, data) {
     log.innerHTML += "\n" + e + " " + (data || '');
   }
 
@@ -38,17 +38,17 @@
 
   function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
-    __log('Media stream created.');
+    htmlLog('Media stream created.');
 
     // 我要在這邊把聲音的buffer收集起來
     mediaRecorder = new MediaRecorder(stream)
-    console.log(mediaRecorder);
     
+    // 下面那行註解打開會馬上收到聲音，因為麥克風輸入後又直接馬上輸出
     // input.connect(audio_context.destination);
-    // __log('Input connected to audio context destination.');
+    // htmlLog('Input connected to audio context destination.');
 
     recorder = new Recorder(input);
-    __log('Recorder initialised.');
+    htmlLog('Recorder initialised.');
 
   }
 
@@ -56,22 +56,17 @@
     recorder && recorder.record();
     button.disabled = true;
     button.nextElementSibling.disabled = false;
-    __log('Recording...');
+    htmlLog('Recording...');
 
     // 開始收聲音串流了～～
     mediaRecorder.start()
-    console.log('mediaRecorder');
-    console.log(mediaRecorder);
-    
   }
 
   function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
-    __log('Stopped recording.');
-    socket.send('打招呼')
-
+    htmlLog('Stopped recording.');
 
     // 停止收聲音串流了～～
     mediaRecorder.stop();
@@ -107,26 +102,18 @@
       window.URL = window.URL || window.webkitURL;
 
       audio_context = new AudioContext;
-      __log('Audio context set up.');
-      __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+      htmlLog('Audio context set up.');
+      htmlLog('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
    
     } catch (e) {
       alert('No web audio support in this browser!');
     }
 
-    // navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-    //   __log('No live audio input: ' + e);
-    // });
-  let onError = function(err) {
-      __log('No live audio input: ' + e);
-
-    console.log('The following error occured: ' + err);
-  }
-  navigator.mediaDevices.getUserMedia({audio: true}).then(startUserMedia, onError);
-    
+    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+      htmlLog('No live audio input: ' + e);
+    });
   };
   </script>
-<!-- <script src="https://rawgit.com/binaryjs/binaryjs/master/dist/binary.min.js"></script> -->
   <script src="recorder.js"></script>
   <script src="websocket.js"></script>
 

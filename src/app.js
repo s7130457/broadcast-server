@@ -50,7 +50,7 @@ function initWS(ws) {
       } else if (data === '停止錄音') {
         console.log(`停止錄音～`);
         wstream.end();
-      }  else {
+      } else {
         console.log(`從ws收到資料`);
         wstream.write(data)
         console.log(data);

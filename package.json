@@ -5,9 +5,6 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:lib": "babel public/ -d lib/",
-    "html": "browserify lib/index.js -t babelify --outfile dist/recorder.js -s Recorder",
-    "prestart": "npm run html",
     "start": "node ./src/app.js"
   },
   "author": "jeni",

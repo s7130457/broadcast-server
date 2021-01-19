@@ -25,13 +25,8 @@ var Recorder = function(source, cfg){
   
   this.node.onaudioprocess = function(e){
     if (!recording) return;
-    // mediaRecorder
-    // console.log(e.inputBuffer.getChannelData(0));
     const left = e.inputBuffer.getChannelData(0);
     socket.send(convertFloat32ToInt16(left))
-    // console.log(convertFloat32ToInt16(left));
-    
-    // window.Stream.write(convertFloat32ToInt16(left));
 
     worker.postMessage({
       command: 'record',
