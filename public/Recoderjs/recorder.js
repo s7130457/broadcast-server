@@ -1,8 +1,6 @@
 var WORKER_PATH = './recorderWorker.js';
 
 var Recorder = function(source, cfg){
-  let soundSource
-
   var config = cfg || {};
   var bufferLen = config.bufferLen || 4096;
   this.context = source.context;
@@ -28,19 +26,32 @@ var Recorder = function(source, cfg){
   this.node.onaudioprocess = function(e){
     if (!recording) return;
     // mediaRecorder
-    socket.send(e.inputBuffer.getChannelData(1))
-    console.log(e.inputBuffer);
+    // console.log(e.inputBuffer.getChannelData(0));
+    const left = e.inputBuffer.getChannelData(0);
+    socket.send(convertFloat32ToInt16(left))
+    // console.log(convertFloat32ToInt16(left));
     
+    // window.Stream.write(convertFloat32ToInt16(left));
 
     worker.postMessage({
       command: 'record',
       buffer: [
         e.inputBuffer.getChannelData(0),
-        e.inputBuffer.getChannelData(1)
+        e.inputBuffer.getChannelData(0)
       ]
     });
   }
 
+
+  function convertFloat32ToInt16(buffer) {
+    l = buffer.length;
+    buf = new Int16Array(l);
+    while (l--) {
+      buf[l] = Math.min(1, buffer[l])*0x7FFF;
+    }
+    return buf.buffer;
+  }
+  
   this.configure = function(cfg){
     for (var prop in cfg){
       if (cfg.hasOwnProperty(prop)){
@@ -51,10 +62,13 @@ var Recorder = function(source, cfg){
 
   this.record = function(){
     recording = true;
+    
   }
 
   this.stop = function(){
     recording = false;
+    socket.send('停止錄音')
+
   }
 
   this.clear = function(){

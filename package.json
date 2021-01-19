@@ -15,11 +15,14 @@
   "dependencies": {
     "audiobuffer": "^0.2.0",
     "audiobuffer-to-wav": "^1.0.0",
+    "binaryjs": "^0.2.1",
     "browserify": "^17.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "inline-worker": "^1.1.0",
     "node-fetch": "^2.6.1",
+    "wav": "^1.0.2",
+    "wavefile": "^11.0.0",
     "ws": "^7.4.2"
   },
   "devDependencies": {
