@@ -31,7 +31,6 @@
 
   var audio_context;
   var recorder;
-  let mediaRecorder
   let chunks = []
   
 
@@ -40,9 +39,6 @@
     var input = audio_context.createMediaStreamSource(stream);
     htmlLog('Media stream created.');
 
-    // 我要在這邊把聲音的buffer收集起來
-    mediaRecorder = new MediaRecorder(stream)
-    
     // 下面那行註解打開會馬上收到聲音，因為麥克風輸入後又直接馬上輸出
     // input.connect(audio_context.destination);
     // htmlLog('Input connected to audio context destination.');
@@ -57,9 +53,6 @@
     button.disabled = true;
     button.nextElementSibling.disabled = false;
     htmlLog('Recording...');
-
-    // 開始收聲音串流了～～
-    mediaRecorder.start()
   }
 
   function stopRecording(button) {
@@ -67,9 +60,6 @@
     button.disabled = true;
     button.previousElementSibling.disabled = false;
     htmlLog('Stopped recording.');
-
-    // 停止收聲音串流了～～
-    mediaRecorder.stop();
 
     // create WAV download link using audio data blob
     createDownloadLink();

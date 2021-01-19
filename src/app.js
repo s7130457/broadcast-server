@@ -45,9 +45,12 @@ function initWS(ws) {
     console.log(`client connect`)
     wstream = fs.createWriteStream('test.wav')
     socket.on('message', data => {
-      if (data === '打招呼') {
+      // 一開始的data不知道為什麼一定要跟client的onopen時，ws send過來的一樣
+      if (data === 'connect') {
         console.log(`打招呼～`);
-      } else if (data === '停止錄音') {
+      } 
+      
+      if (data === '停止錄音') {
         console.log(`停止錄音～`);
         wstream.end();
       } else {

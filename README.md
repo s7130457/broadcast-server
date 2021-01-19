@@ -16,8 +16,7 @@ npm start
 ```
 ---
 ### 改寫步驟：
-0. 先安裝google擴充套件：[Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
-1. 主要參考Recoder.js，並在```startUserMedia()```函式增加```mediaRecorder = new MediaRecorder(stream)```，在錄音跟停止錄音的功能去對mediaRecorder下```start()```或```stop()```
+1. 先安裝google擴充套件：[Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
 2. 建立websocket.js檔，裡面建立websocket連線
 3. 到recoder.js的```onaudioprocess```函式去，這裡當錄音執行時就會開始拿到event，因為普遍廣播是單聲道，所以拿```e.inputBuffer.getChannelData(0)```就夠了
 4. 因為拿到的串流是float32，一般的聲音格式是int 16，因此在前端將buffer執行轉換後再透過websocket送去後端(找到的資料是用binaryjs，這裡一樣用ws就好)
