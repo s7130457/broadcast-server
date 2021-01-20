@@ -36,6 +36,7 @@
 
 
   function startUserMedia(stream) {
+    audio_context.resume()
     var input = audio_context.createMediaStreamSource(stream);
     htmlLog('Media stream created.');
 
@@ -90,7 +91,6 @@
       window.AudioContext = window.AudioContext || window.webkitAudioContext;
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
       window.URL = window.URL || window.webkitURL;
-
       audio_context = new AudioContext;
       htmlLog('Audio context set up.');
       htmlLog('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
