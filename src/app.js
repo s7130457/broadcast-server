@@ -43,21 +43,27 @@ function initWS(ws) {
   console.log('init ws');
   ws.on('connection', socket => {
     console.log(`client connect`)
-    wstream = fs.createWriteStream('test.wav')
     socket.on('message', data => {
-      // 一開始的data不知道為什麼一定要跟client的onopen時，ws send過來的一樣
-      if (data === 'connect') {
-        console.log(`打招呼～`);
-      } 
-      
-      if (data === '停止錄音') {
-        console.log(`停止錄音～`);
-        wstream.end();
-      } else {
+      if (typeof data === 'string') {
+        if (data === '開始錄音') {
+          wstream = fs.createWriteStream('test.wav')
+          console.log(`開始錄音`);
+        }
+        if (data === '停止錄音') {
+          console.log(`停止錄音～`);
+          wstream.end();
+        }
+      }
+
+      if (Buffer.isBuffer(data)) {
         console.log(`從ws收到資料`);
         wstream.write(data)
-        console.log(data);
-      }
+        // console.log(data);
+      } 
+    })
+
+    socket.on('close', () => {
+      console.log(`client is closed.`);
     })
   })
 }

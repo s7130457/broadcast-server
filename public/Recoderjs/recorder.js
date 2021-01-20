@@ -57,7 +57,7 @@ var Recorder = function(source, cfg){
 
   this.record = function(){
     recording = true;
-    
+    socket.send('開始錄音')
   }
 
   this.stop = function(){

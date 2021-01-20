@@ -1,7 +1,6 @@
 const socket = new WebSocket('ws://localhost:5000');
 socket.binaryType = 'arraybuffer'
 socket.onopen = function () {
-  console.log(socket);
   console.log('connect');
   socket.send('connect')
 
