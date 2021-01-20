@@ -31,32 +31,19 @@ function convertFloat32ToInt16(buffer) {
 }
 ```
 5. 後端就建立一個write stream開始寫檔
-```javascript=
-let wstream
-ws.on('connection', socket => {
-  console.log(`client connect`)
-  wstream = fs.createWriteStream('test.wav')
-  socket.on('message', data => {
-    if (data === 'connect') {
-      console.log(`client connect～`);
-    } else if (data === '停止錄音') {
-      console.log(`停止錄音～`);
-      wstream.end();
-    } else {
-      console.log(`從ws收到資料`);
-      wstream.write(data)
-      console.log(data);
-    }
-  })
-})
-```
 6. 最後下```ffplay -f s16le -ar 48000 -ac 1 -nodisp test.wav```聽聽看儲存的聲音是否正確
+
+---
+
+### 應用：
+後續可以用rtAudio lib來將收到的聲音串流去做廣播
+- [audify api](https://almogh52.github.io/audify/)
+- [sox-stream](https://github.com/ArtskydJ/sox-stream) 
 ---
 ### ref:
 1. 如何將recordjs去把audio buffer透過ws傳給後端：[Learning How to Capture and Record Audio in HTML5](https://yushulx.medium.com/learning-how-to-capture-and-record-audio-in-html5-6fe68a769bf9)
-2. 要用 MediaRecorder api來收串流：[web-dictaphone小範例](https://github.com/mdn/web-dictaphone/blob/gh-pages/scripts/app.js)
-3. 聲音的介紹：[Web Audio之getChannelData](https://juejin.cn/post/6844904098764947463)
-4. [Tutorial: HTML Audio Capture streaming to Node.js (no browser extensions)](https://subvisual.com/blog/posts/39-tutorial-html-audio-capture-streaming-to-node-js-no-browser-extensions/)
-5. [後端透過ws將聲音存成wav檔](https://github.com/davehorton/simple-ws-recorder/blob/cabc2f4472fba1127d99ba1cc48292b8a0d89e1d/app.js#L12)
-6. [Recoder.js](https://github.com/jergason/Recorderjs)
-7. [[套件] Recorder.js 網頁版錄音程式，不限平台開啟網頁立即就可錄音](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
+2. 聲音的介紹：[Web Audio之getChannelData](https://juejin.cn/post/6844904098764947463)
+3. [Tutorial: HTML Audio Capture streaming to Node.js (no browser extensions)](https://subvisual.com/blog/posts/39-tutorial-html-audio-capture-streaming-to-node-js-no-browser-extensions/)
+4. [後端透過ws將聲音存成wav檔](https://github.com/davehorton/simple-ws-recorder/blob/cabc2f4472fba1127d99ba1cc48292b8a0d89e1d/app.js#L12)
+5. [Recoder.js](https://github.com/jergason/Recorderjs)
+6. [[套件] Recorder.js 網頁版錄音程式，不限平台開啟網頁立即就可錄音](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
