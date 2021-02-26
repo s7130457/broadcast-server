@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/app.js"
+    "start": "node ./src/app.js",
+    "fortend": "webpack --watch --mode development"
   },
   "author": "jeni",
   "license": "ISC",
@@ -17,13 +18,18 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "inline-worker": "^1.1.0",
+    "microphone-stream": "^5.3.1",
     "node-fetch": "^2.6.1",
+    "simple-peerjs": "^1.0.1",
     "wav": "^1.0.2",
     "wavefile": "^11.0.0",
+    "wrtc": "^0.4.7",
     "ws": "^7.4.2"
   },
   "devDependencies": {
-    "babelify": "^10.0.0"
+    "babelify": "^10.0.0",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0"
   },
   "repository": {
     "type": "git",
