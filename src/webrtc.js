@@ -3,13 +3,16 @@ const fetch = require('node-fetch')
 const WebSocket = require('ws')
 const SimplePeerJs = require('simple-peerjs')
 const { RtAudio, RtAudioFormat, RtAudioApi, RtAudioStreamFlags } = require('audify')
-// NOTE: 因為丟到底層的 size = buffer * 4，不知道 udp 會收到多長的情況下做一個 Chunk 來切送到底層的資料
 const { PassThrough } = require('stream').PassThrough
 const Transform = require('stream').Transform
 const util = require('util')
+
+
+// const rtAudio = new RtAudio(RtAudioApi.LINUX_ALSA)
 const rtAudio = new RtAudio(RtAudioApi.MACOSX_CORE)
 
 const BUFFER_SIZE = 512
+// NOTE: 因為丟到底層的 size = buffer * 4，不知道 udp 會收到多長的情況下做一個 Chunk 來切送到底層的資料
 function Chunk(size) {
   this.splitSize = size
   this.buffer = Buffer.alloc(0)
@@ -56,10 +59,13 @@ const WebRTC = function () {
       RtAudioFormat.RTAUDIO_SINT16,
       48000,
       1024, // 這裡要是buffer的兩倍
-      'MyStream'
+      'MyStream',
+      null,
+      null,
+      RtAudioStreamFlags.RTAUDIO_SCHEDULE_REALTIME
     )
     rtAudio.start()
-    
+
     console.log('Peer connected client:', client.peerId);
     client.peer.on('data', data => {
       chunkStream.write(data)
