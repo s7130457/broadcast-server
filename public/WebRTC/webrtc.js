@@ -2,11 +2,8 @@ const SimplePeerJs = require('simple-peerjs')
 
 
 // 從Recordjs改寫的
+let flag = false
 const WebRTC = function (source, cfg) {
-
-  console.log(source);
-  this.record = false
-  
   this.peer = new SimplePeerJs({
     secure: true,
   })
@@ -17,29 +14,13 @@ const WebRTC = function (source, cfg) {
   var bufferLen = config.bufferLen || 4096;
   this.node = (this.context.createScriptProcessor ||
     this.context.createJavaScriptNode).call(this.context,
-      bufferLen, 2, 2);
-
-  source.connect(this.node);
-  this.node.connect(this.context.destination);
-  // console.log('stream');
-  // console.log(stream);
-
-
+      256, 2, 2);
   this.peerConnect = ''
 
-
-  this.node.onaudioprocess = function(e){
-    // console.log('e');
-    // console.log(e);
-    if (! this.record) return
-    
+  this.node.onaudioprocess = (e) => {
+    if (!flag) return
     const left = e.inputBuffer.getChannelData(0);
-    console.log(this.peerConnect);
-    
     this.peerConnect.peer.send(convertFloat32ToInt16(left))
-    // console.log('left');
-    // console.log(left);
-    
   }
 
   function convertFloat32ToInt16(buffer) {
@@ -50,7 +31,8 @@ const WebRTC = function (source, cfg) {
     }
     return buf.buffer;
   }
-
+  source.connect(this.node);
+  this.node.connect(this.context.destination)
 }
 
 
@@ -60,17 +42,15 @@ async function _init() {
 
 WebRTC.prototype.connect = async function (id) {
   this.peerConnect = await this.peer.connect(id)
-  // this.peer.addStream(window.stream)
 }
 
 WebRTC.prototype.start = function () {
-  this.record = true
-  // this.peerConnect.peer.send(window.stream)
+  flag = true
+  console.log('start');
 }
 WebRTC.prototype.stop = function () {
-  this.record = false
+  flag = false
   console.log('stop');
-  
 }
 
 module.exports = WebRTC

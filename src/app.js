@@ -19,28 +19,26 @@ server.listen(3000, () => {
 app.get(`/api/webrtc/connection`, async function (req, res, next) {
   // const clientPeer = await WebRTCService.connect() 
   const id = WebRTCService.peerId 
-  // res.status(200).json({id})
-
   console.log('connect');
   res.status(200).json({id})
 })
 
 
-// app.get(`/api/broadcast/start`, function (req, res, next) {
-//   console.log('backend recv broadcast start req!')
-//   // recorder = new RecoderService()
-//   connectClient = req.ip
-//   if (!BroadcastService.status()) {
-//     res.status(200).json({ data: 'ok' })
+app.get(`/api/broadcast/start`, function (req, res, next) {
+  console.log('backend recv broadcast start req!')
+  // recorder = new RecoderService()
+  connectClient = req.ip
+  if (!BroadcastService.status()) {
+    res.status(200).json({ data: 'ok' })
 
-//     BroadcastService.start(connectClient)
-//   } else {
-//     res.status(400).json({ message: '已經有人正在廣播了，還想廣播？拒絕你！' })
-//   }
-// })
+    BroadcastService.start(connectClient)
+  } else {
+    res.status(400).json({ message: '已經有人正在廣播了，還想廣播？拒絕你！' })
+  }
+})
 
-// app.get(`/api/broadcast/stop`, function (req, res, next) {
-//   console.log('backend recv broadcast stop req!');
-//   BroadcastService.stop()
-//   res.status(200).json({ data: 'ok' })
-// })
+app.get(`/api/broadcast/stop`, function (req, res, next) {
+  console.log('backend recv broadcast stop req!');
+  BroadcastService.stop()
+  res.status(200).json({ data: 'ok' })
+})
