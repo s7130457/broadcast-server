@@ -11,6 +11,7 @@
   "author": "jeni",
   "license": "ISC",
   "dependencies": {
+    "audify": "^1.5.2",
     "audiobuffer": "^0.2.0",
     "audiobuffer-to-wav": "^1.0.0",
     "binaryjs": "^0.2.1",
