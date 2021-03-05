@@ -7,7 +7,6 @@ const { PassThrough } = require('stream').PassThrough
 const Transform = require('stream').Transform
 const util = require('util')
 
-
 // const rtAudio = new RtAudio(RtAudioApi.LINUX_ALSA)
 const rtAudio = new RtAudio(RtAudioApi.MACOSX_CORE)
 
@@ -43,11 +42,11 @@ const WebRTC = function () {
   this.peer = new SimplePeerJs({
     wrtc,
     fetch,
-    WebSocket
+    WebSocket,
+    // stream: true
   })
   this.peerId = ''
   _init.call(this)
-
   this.peer.on('connect', client => {
     rtAudio.openStream(
       {
@@ -70,6 +69,20 @@ const WebRTC = function () {
     client.peer.on('data', data => {
       chunkStream.write(data)
     })
+
+    client.peer.on('stream', stream => {
+      console.log('on stream ');
+      console.log(stream);
+      // chunkStream.write(stream)
+
+      
+    })
+
+    client.peer.on('close', () => {
+      console.log(`client is close`);
+      rtAudio.closeStream()
+    })
+    
   })
 
 }

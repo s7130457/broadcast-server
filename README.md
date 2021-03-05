@@ -15,6 +15,7 @@ npm install
 npm start
 ```
 ---
+## Record.js
 ### 改寫步驟：
 1. 先安裝google擴充套件：[Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
 2. 建立websocket.js檔，裡面建立websocket連線
@@ -47,3 +48,7 @@ function convertFloat32ToInt16(buffer) {
 4. [後端透過ws將聲音存成wav檔](https://github.com/davehorton/simple-ws-recorder/blob/cabc2f4472fba1127d99ba1cc48292b8a0d89e1d/app.js#L12)
 5. [Recoder.js](https://github.com/jergason/Recorderjs)
 6. [[套件] Recorder.js 網頁版錄音程式，不限平台開啟網頁立即就可錄音](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related)
+
+---
+## WebRTC
+https://ithelp.ithome.com.tw/articles/10204431
